@@ -31,6 +31,7 @@ import com.phalu.mytaskplanner.ui.components.TaskItem
 import com.phalu.mytaskplanner.R
 import com.phalu.mytaskplanner.data.local.entities.Task
 import com.phalu.mytaskplanner.data.local.entities.TaskWithCategory
+import com.phalu.mytaskplanner.ui.components.EmptyTaskListUI
 import com.phalu.mytaskplanner.ui.navigation.Screen
 import com.phalu.mytaskplanner.viewmodel.TaskListViewModel
 import com.phalu.mytaskplanner.viewmodel.generics.ViewState
@@ -75,17 +76,21 @@ fun TaskListScreen(
 
         when (taskViewState) {
             is ViewState.Data -> {
+                val tasks = (taskViewState as ViewState.Data<List<TaskWithCategory>>).data
+
                 Column(modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding)
                     .padding(horizontal = 16.dp, vertical = 8.dp)
                 ) {
-                    FilterSortBar(
-                        selectedSortOption = sortOption,
-                        onSortOptionSelected = { viewModel.setSortOption(it) },
-                        selectedStatusFilter = statusFilter,
-                        onStatusFilterSelected = { viewModel.setStatusFilter(it) }
-                    )
+                    if (tasks.isNotEmpty()) {
+                        FilterSortBar(
+                            selectedSortOption = sortOption,
+                            onSortOptionSelected = { viewModel.setSortOption(it) },
+                            selectedStatusFilter = statusFilter,
+                            onStatusFilterSelected = { viewModel.setStatusFilter(it) }
+                        )
+                    }
 
                     TaskListContent(
                         tasks = (taskViewState as ViewState.Data<List<TaskWithCategory>>).data,
@@ -115,16 +120,21 @@ fun TaskListContent(
     onTaskClick: (Int) -> Unit,
     onDeleteTask: (Task) -> Unit,
 ) {
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        items(tasks) { task ->
-            TaskItem(
-                task = task,
-                onTaskClick = { onTaskClick(task.task.id) },
-                onDeleteTask = { onDeleteTask(task.task) }
-            )
+    if (tasks.isEmpty()) {
+        // Show Empty UI
+        EmptyTaskListUI()
+    } else {
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            items(tasks) { task ->
+                TaskItem(
+                    task = task,
+                    onTaskClick = { onTaskClick(task.task.id) },
+                    onDeleteTask = { onDeleteTask(task.task) }
+                )
+            }
         }
     }
 }

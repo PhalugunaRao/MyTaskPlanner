@@ -12,4 +12,10 @@
     <string name="mark_complete">Mark as Complete</string>
     <string name="delete_task">Delete Task</string>
     <string name="update_task">update task</string>
+    <string name="no_tasks_available">No tasks available</string>
+    <string name="empty_task_image">Empty task list illustration</string>
+    <string name="empty_task_title">You have no tasks!</string>
+    <string name="empty_task_subtitle">Start by creating a new task and make today count 💪</string>
+
+
 </resources>
