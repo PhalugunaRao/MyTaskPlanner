@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">MyTaskPlanner</string>
+    <string name="category_color">Category color</string>
+    <string name="category_name">Category name:</string>
+    <string name="save">Save</string>
+    <string name="add_task">Add task</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="task_list">Task list</string>
+    <string name="task_deleted">Task is deleted</string>
+    <string name="generic_error">"An error occurred"</string>
+    <string name="mark_complete">Mark as Complete</string>
+    <string name="delete_task">Delete Task</string>
+    <string name="update_task">update task</string>
 </resources>
